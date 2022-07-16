@@ -14,8 +14,10 @@ fastify.post('/add', schema.addDataSchema, async (request, response) => {
                 break
             }
         }
+        //if the student record doesn't exist already
         if (flag === 0) {
             if (studentName.length >= 3 && !(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(studentName))) {
+                //if all the subject details are given
                 if (!isNaN(parseFloat(subject1)) && !isNaN(parseFloat(subject2)) && !isNaN(parseFloat(subject3)) && !isNaN(parseFloat(subject4)) && !isNaN(parseFloat(subject5))) {
                     students.push(request.body)
                     response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ message: "record added successfully", students })
@@ -58,7 +60,6 @@ fastify.post('/update', schema.updateDataSchema, async (request, response) => {
         let flag = 0
         for (student of students) {
             if (student['studentID'] == studentID) {
-                // student[]
                 flag = 1
                 updateDetails.map((item, index) => {
                     if (item > -1) {
@@ -68,9 +69,10 @@ fastify.post('/update', schema.updateDataSchema, async (request, response) => {
             }
             newStudentCopy.push(student)
         }
-        students = newStudentCopy
+        //if the student record doesn't exist
         if (flag === 1) {
-            response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ message: "record updated successfully", students })
+            students = newStudentCopy
+            response.code(204).header('Content-Type', 'application/json;charset=utf-8').send({ message: "record updated successfully", students })
         } else {
             response.code(404).header('Content-Type', 'application/json;charset=utf-8').send({ error: 'record of the student is not found' })
         }
@@ -82,17 +84,11 @@ fastify.post('/update', schema.updateDataSchema, async (request, response) => {
 fastify.delete('/delete', schema.deleteDataSchema, async (request, response) => {
     let { studentID } = request.body
     if (studentID) {
-        let newStudentCopy = []
-        let flag = 0
-        for (student of students) {
-            if (student['studentID'] == studentID) {
-                flag = 1
-            } else {
-                newStudentCopy.push(student)
-            }
-        }
-        students = newStudentCopy
-        if (flag === 1) {
+        var elementPos = students.map(function (x) { return x.studentID }).indexOf(studentID);
+
+        if (elementPos > -1) {
+            console.log("\n\n\n\n\n", elementPos)
+            students.splice(elementPos, 1)
             response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ message: "record deleted successfully", students })
         } else {
             response.code(404).header('Content-Type', 'application/json;charset=utf-8').send({ error: 'record of the student is not found' })
