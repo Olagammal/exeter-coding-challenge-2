@@ -16,6 +16,7 @@ const addDataSchema = {
             201: {
                 type: 'object',
                 properties: {
+                    message: { type: 'string' },
                     students: { type: 'object' }
                 }
             },
@@ -42,6 +43,7 @@ const updateDataSchema = {
             200: {
                 type: 'object',
                 properties: {
+                    message: { type: 'string' },
                     students: { type: 'object' }
                 }
             },
@@ -67,6 +69,7 @@ const deleteDataSchema = {
             200: {
                 type: 'object',
                 properties: {
+                    message: { type: 'string' },
                     students: { type: 'object' }
                 }
             },

@@ -18,7 +18,7 @@ fastify.post('/add', schema.addDataSchema, async (request, response) => {
             if (studentName.length >= 3 && !(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(studentName))) {
                 if (!isNaN(parseFloat(subject1)) && !isNaN(parseFloat(subject2)) && !isNaN(parseFloat(subject3)) && !isNaN(parseFloat(subject4)) && !isNaN(parseFloat(subject5))) {
                     students.push(request.body)
-                    response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ students })
+                    response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ message: "record added successfully", students })
                 } else {
                     response.code(400).header('Content-Type', 'application/json;charset=utf-8').send({ error: 'please enter the subject marks properly' })
                 }
@@ -70,7 +70,7 @@ fastify.post('/update', schema.updateDataSchema, async (request, response) => {
         }
         students = newStudentCopy
         if (flag === 1) {
-            response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ students })
+            response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ message: "record updated successfully", students })
         } else {
             response.code(404).header('Content-Type', 'application/json;charset=utf-8').send({ error: 'record of the student is not found' })
         }
@@ -93,7 +93,7 @@ fastify.delete('/delete', schema.deleteDataSchema, async (request, response) => 
         }
         students = newStudentCopy
         if (flag === 1) {
-            response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ students })
+            response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ message: "record deleted successfully", students })
         } else {
             response.code(404).header('Content-Type', 'application/json;charset=utf-8').send({ error: 'record of the student is not found' })
         }
