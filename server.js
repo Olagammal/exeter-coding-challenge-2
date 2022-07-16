@@ -15,8 +15,7 @@ fastify.post('/add', schema.addDataSchema, async (request, response) => {
             }
         }
         if (flag === 0) {
-            //TODO:add validation for student name
-            if (studentName.length >= 3) {
+            if (studentName.length >= 3 && !(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(studentName))) {
                 if (!isNaN(parseFloat(subject1)) && !isNaN(parseFloat(subject2)) && !isNaN(parseFloat(subject3)) && !isNaN(parseFloat(subject4)) && !isNaN(parseFloat(subject5))) {
                     students.push(request.body)
                     response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ students })
@@ -118,6 +117,3 @@ const startServer = async () => {
 }
 
 startServer()
-
-//TODO:when no body for post
-//TODO:check for unique student id
