@@ -68,6 +68,29 @@ fastify.post('/update', addDataSchema, async (request, response) => {
     }
 })
 
+fastify.delete('/delete', addDataSchema.deleteDataSchema, async (request, response) => {
+    let { studentID } = request.body
+    if (studentID) {
+        let newStudentCopy = []
+        let flag = 0
+        for (student of students) {
+            if (student['studentID'] == studentID) {
+                flag = 1
+            } else {
+                newStudentCopy.push(student)
+            }
+        }
+        students = newStudentCopy
+        if (flag === 1) {
+            response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ students })
+        } else {
+            response.code(404).header('Content-Type', 'application/json;charset=utf-8').send({ error: 'record of the student is not found' })
+        }
+    } else {
+        response.code(400).header('Content-Type', 'application/json;charset=utf-8').send({ error: 'please send the details in correct format' })
+    }
+})
+
 fastify.get('/report', addDataSchema, async (request, response) => {
     response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ students })
 })
