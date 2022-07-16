@@ -16,7 +16,7 @@ fastify.post('/add', schema.addDataSchema, async (request, response) => {
         }
         //if the student record doesn't exist already
         if (flag === 0) {
-            if (studentName.length >= 3 && !(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(studentName))) {
+            if (studentName.length >= 3 && !(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(studentName))) {
                 //if all the subject details are given
                 if (!isNaN(parseFloat(subject1)) && !isNaN(parseFloat(subject2)) && !isNaN(parseFloat(subject3)) && !isNaN(parseFloat(subject4)) && !isNaN(parseFloat(subject5))) {
                     students.push(request.body)
@@ -25,7 +25,7 @@ fastify.post('/add', schema.addDataSchema, async (request, response) => {
                     response.code(400).header('Content-Type', 'application/json;charset=utf-8').send({ error: 'please enter the subject marks properly' })
                 }
             } else {
-                response.code(400).header('Content-Type', 'application/json;charset=utf-8').send({ error: "student's name should have more than 3 characters" })
+                response.code(400).header('Content-Type', 'application/json;charset=utf-8').send({ error: "student's name should have more than 3 characters and no special characters" })
             }
         } else {
             response.code(400).header('Content-Type', 'application/json;charset=utf-8').send({ error: 'student id already exists' })
@@ -72,7 +72,7 @@ fastify.post('/update', schema.updateDataSchema, async (request, response) => {
         //if the student record doesn't exist
         if (flag === 1) {
             students = newStudentCopy
-            response.code(204).header('Content-Type', 'application/json;charset=utf-8').send({ message: "record updated successfully", students })
+            response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ message: "record updated successfully", students })
         } else {
             response.code(404).header('Content-Type', 'application/json;charset=utf-8').send({ error: 'record of the student is not found' })
         }

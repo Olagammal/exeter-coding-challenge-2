@@ -17,7 +17,18 @@ const addDataSchema = {
                 type: 'object',
                 properties: {
                     message: { type: 'string' },
-                    students: { type: 'object' }
+                    students: {
+                        type: 'array',
+                        properties: {
+                            studentName: { type: 'string' },
+                            studentID: { type: 'string' },
+                            subject1: { type: 'string' },
+                            subject2: { type: 'string' },
+                            subject3: { type: 'string' },
+                            subject4: { type: 'string' },
+                            subject5: { type: 'string' }
+                        }
+                    }
                 }
             },
             400: {
@@ -36,7 +47,11 @@ const updateDataSchema = {
             type: 'object',
             properties: {
                 studentID: { type: 'string' },
-                subjectName: { type: 'string' }
+                subject1: { type: ['string', 'null'] },
+                subject2: { type: ['string', 'null'] },
+                subject3: { type: ['string', 'null'] },
+                subject4: { type: ['string', 'null'] },
+                subject5: { type: ['string', 'null'] }
             }
         },
         response: {
@@ -44,7 +59,18 @@ const updateDataSchema = {
                 type: 'object',
                 properties: {
                     message: { type: 'string' },
-                    students: { type: 'object' }
+                    students: {
+                        type: 'array',
+                        properties: {
+                            studentName: { type: 'string' },
+                            studentID: { type: 'string' },
+                            subject1: { type: 'string' },
+                            subject2: { type: 'string' },
+                            subject3: { type: 'string' },
+                            subject4: { type: 'string' },
+                            subject5: { type: 'string' }
+                        }
+                    }
                 }
             },
             400: {
@@ -52,7 +78,13 @@ const updateDataSchema = {
                 properties: {
                     error: { type: 'string' }
                 }
-            }
+            },
+            404: {
+                type: 'object',
+                properties: {
+                    error: { type: 'string' }
+                }
+            },
         }
     }
 }
@@ -70,7 +102,18 @@ const deleteDataSchema = {
                 type: 'object',
                 properties: {
                     message: { type: 'string' },
-                    students: { type: 'object' }
+                    students: {
+                        type: 'array',
+                        properties: {
+                            studentName: { type: 'string' },
+                            studentID: { type: 'string' },
+                            subject1: { type: 'string' },
+                            subject2: { type: 'string' },
+                            subject3: { type: 'string' },
+                            subject4: { type: 'string' },
+                            subject5: { type: 'string' }
+                        }
+                    }
                 }
             },
             404: {
@@ -95,13 +138,18 @@ const getDataSchema = {
             200: {
                 type: 'object',
                 properties: {
-                    students: { type: 'object' }
-                }
-            },
-            404: {
-                type: 'object',
-                properties: {
-                    error: { type: 'string' }
+                    students: {
+                        type: 'array',
+                        properties: {
+                            studentName: { type: 'string' },
+                            studentID: { type: 'string' },
+                            subject1: { type: 'string' },
+                            subject2: { type: 'string' },
+                            subject3: { type: 'string' },
+                            subject4: { type: 'string' },
+                            subject5: { type: 'string' }
+                        }
+                    }
                 }
             }
         }
