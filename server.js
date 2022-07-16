@@ -1,10 +1,10 @@
 const fastify = require('fastify')({ logger: true })
-const addDataSchema = require('./routeConfiguration')
+const schema = require('./routeConfiguration')
 
 //contains all the data
 var students = []
 
-fastify.post('/add', addDataSchema, async (request, response) => {
+fastify.post('/add', schema.addDataSchema, async (request, response) => {
     let { studentName, studentID, subject1, subject2, subject3, subject4, subject5 } = request.body
     if (studentName && studentID && subject1 && subject2 && subject3 && subject4 && subject5) {
         //TODO:add validation for student name
@@ -23,7 +23,7 @@ fastify.post('/add', addDataSchema, async (request, response) => {
     }
 })
 
-fastify.post('/update', addDataSchema, async (request, response) => {
+fastify.post('/update', schema.updateDataSchema, async (request, response) => {
     let { studentID, subject1, subject2, subject3, subject4, subject5 } = request.body
     let updateDetails = [-1, -1, -1, -1, -1]
     if (parseFloat(subject1)) {
@@ -68,7 +68,7 @@ fastify.post('/update', addDataSchema, async (request, response) => {
     }
 })
 
-fastify.delete('/delete', addDataSchema.deleteDataSchema, async (request, response) => {
+fastify.delete('/delete', schema.deleteDataSchema, async (request, response) => {
     let { studentID } = request.body
     if (studentID) {
         let newStudentCopy = []
@@ -91,7 +91,7 @@ fastify.delete('/delete', addDataSchema.deleteDataSchema, async (request, respon
     }
 })
 
-fastify.get('/report', addDataSchema, async (request, response) => {
+fastify.get('/report', schema.getDataSchema, async (request, response) => {
     response.code(200).header('Content-Type', 'application/json;charset=utf-8').send({ students })
 })
 
